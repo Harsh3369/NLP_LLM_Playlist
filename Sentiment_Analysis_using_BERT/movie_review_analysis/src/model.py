@@ -19,3 +19,4 @@ class BERTBasedUncased(nn.Module):
         output = self.out(bo)
         return output
 
+    
