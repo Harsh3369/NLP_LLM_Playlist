@@ -41,3 +41,5 @@ def run():
         batch_size=config.VALID_BATCH_SIZE,
         num_workers = 1
     )
+
+    device = torch.device("cuda")
