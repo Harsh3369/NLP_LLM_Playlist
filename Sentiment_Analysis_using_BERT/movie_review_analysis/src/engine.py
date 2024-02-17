@@ -37,15 +37,15 @@ def eval_fn(data_loader,model,device):
     fin_outputs = []
     with torch.no_grad():
         for bi, d in tqdm(enumerate(data_loader), total= len(data_loader)):
-        ids = d["ids"]
-        mask = d["masks"]
-        token_type_ids = d["token_type_ids"]
-        targets = d["targets"]
+            ids = d["ids"]
+            mask = d["masks"]
+            token_type_ids = d["token_type_ids"]
+            targets = d["targets"]
 
-        ids = ids.to(device, dtype=torch.long)
-        mask = mask.to(device, dtype=torch.long)
-        token_type_ids = token_type_ids.to(device, dtype=torch.long)
-        targets = targets.to(device, dtype=torch.float)
+            ids = ids.to(device, dtype=torch.long)
+            mask = mask.to(device, dtype=torch.long)
+            token_type_ids = token_type_ids.to(device, dtype=torch.long)
+            targets = targets.to(device, dtype=torch.float)
 
         outputs = model(
             ids = ids,
