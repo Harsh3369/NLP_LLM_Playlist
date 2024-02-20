@@ -5,12 +5,12 @@ import torch.nn as nn
 def loss_fn(outputs,targets):
     return nn.BCEWithLogitsLoss()(outputs,targets)
 
-def train_fn(data_loader, model, optimizer, device):
+def train_fn(data_loader, model, optimizer, device, scheduler):
     model.train()
     
     for bi, d in tqdm(enumerate(data_loader), total= len(data_loader)):
-        ids = d['ids']
-        mask = d["masks"]
+        ids = d["ids"]
+        mask = d["mask"]
         token_type_ids = d["token_type_ids"]
         targets = d["targets"]
 

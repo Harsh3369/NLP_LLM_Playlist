@@ -2,7 +2,7 @@ import config
 import dataset
 import engine
 import torch
-from torch import nn
+import torch.nn as nn
 import pandas as pd
 import numpy as np
 
@@ -30,7 +30,7 @@ def run():
 
     train_dataset = dataset.BERTDataset(
         review=df_train.review.values,
-        target=df_train.target.values
+        target=df_train.sentiment.values
     )
 
     train_data_loader = torch.utils.data.DataLoader(
@@ -41,7 +41,7 @@ def run():
 
     valid_dataset = dataset.BERTDataset(
         review=df_valid.review.values,
-        target=df_valid.target.values
+        target=df_valid.sentiment.values
     )
 
     valid_data_loader = torch.utils.data.DataLoader(
@@ -56,12 +56,12 @@ def run():
     param_optimizer = list(model.named_parameters())
     no_decay = ["bias", "LayerNorm.bias", "LayerNorm.weight"]
     optimizer_parameters = [
-        {'param': [p for n, p in param_optimizer if not any(nd in n for nd in no_decay)], 'weight_decay': 0.001},
-        {'param': [p for n, p in param_optimizer if any(nd in n for nd in no_decay)], 'weight_decay': 0.0}
+        {'params': [p for n, p in param_optimizer if not any(nd in n for nd in no_decay)], 'weight_decay': 0.001},
+        {'params': [p for n, p in param_optimizer if any(nd in n for nd in no_decay)], 'weight_decay': 0.0}
     ]
 
     num_train_steps = int(len(df_train)/ config.TRAIN_BATCH_SIZE * config.EPOCHS)
-    optimizer = AdamW(optimizer_parameters, lr = 3e-5)
+    optimizer = AdamW(optimizer_parameters, lr=3e-5)
     scheduler = get_linear_schedule_with_warmup(
         optimizer,
         num_warmup_steps=0,
